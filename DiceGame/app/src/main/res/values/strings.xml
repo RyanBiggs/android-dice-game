@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dice Game</string>
+    <string name="btn_high_scores">High Scores</string>
+    <string name="btn_start_game">Start Game</string>
+    <string name="btn_return_to_menu">Return to Menu</string>
+    <string name="btn_return_from_scores">Return</string>
+</resources>
