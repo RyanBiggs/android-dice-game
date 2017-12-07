@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity
 {
+    public static final Random RANDOM = new Random();
+
     private Button rollDice;
     private Button highScores;
     private Button returnToMenu;
@@ -39,6 +43,10 @@ public class GameActivity extends AppCompatActivity
     private int highestRoll = 0;
     //************************
 
+    public static int randomDiceValue()
+    {
+        return RANDOM.nextInt(6) + 1;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,14 +131,12 @@ public class GameActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    //**********************************
-    // Main functionality for dice game
-    //**********************************
+    //*************************************
+    // Handles functionality for dice game
+    //*************************************
     private void diceGame()
     {
         //TODO: Put diceGame on seperate thread so it can be paused independently of the UI thread.
-        Random rand = new Random();
-
         int dice1;
         int dice2;
 
@@ -142,8 +148,8 @@ public class GameActivity extends AppCompatActivity
         rollDice.setEnabled(false);
         //TODO: Wait for 750 milliseconds
 
-        dice1 = rand.nextInt(5) + 1;
-        dice2 = rand.nextInt(5) + 1;
+        dice1 = randomDiceValue();
+        dice2 = randomDiceValue();
 
         switch (dice1)
         {
@@ -213,56 +219,91 @@ public class GameActivity extends AppCompatActivity
             }
         }
 
-        //**********************
-        // Setting dice 1 image
-        //**********************
-        String uri1 = "@drawable/" + selectedImage1;
+        diceAnim(selectedImage1, selectedImage2);
 
-        int imageResource1 = getResources().getIdentifier(uri1, null, getPackageName());
-        Drawable res1 = getResources().getDrawable(imageResource1, null);
-        diceImage1.setImageDrawable(res1);
+        gameWin(dice1, dice2);
 
-        //******************
-        // Animating dice 1
-        //******************
-        AnimatorSet dice1Anim = new AnimatorSet();
+        if (player == 1)
+        {
+            player = 2;
+        }
+        else
+        {
+            player = 1;
+        }
 
-        dice1Anim.play(ObjectAnimator.ofFloat(diceImage1, "scaleX", 0, 1))
-                .with(ObjectAnimator.ofFloat(diceImage1, "scaleY", 0, 1));
+        rollDice.setEnabled(true);
+    }
 
-        dice1Anim.setStartDelay(0);
-        dice1Anim.setDuration(500);
-        dice1Anim.start();
+    //************************************
+    // Handles dice animation and rolling
+    //************************************
+    private void diceAnim(final String selectedImage1, final String selectedImage2)
+    {
+        final Animation diceAnim1 = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll);
+        final Animation diceAnim2 = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll);
 
-        //**********************
-        // Setting dice 2 image
-        //**********************
-        String uri2 = "@drawable/" + selectedImage2;
+        final Animation.AnimationListener animationListener = new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                rollDice.setEnabled(false);
+            }
 
-        int imageResource2 = getResources().getIdentifier(uri2, null, getPackageName());
-        Drawable res2 = getResources().getDrawable(imageResource2, null);
-        diceImage2.setImageDrawable(res2);
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                String uri1 = "@drawable/" + selectedImage1;
+                String uri2 = "@drawable/" + selectedImage2;
 
-        //******************
-        // Animating dice 2
-        //******************
-        AnimatorSet dice2Anim = new AnimatorSet();
+                int imageResource1 = getResources().getIdentifier(uri1, null, getPackageName());
+                int imageResource2 = getResources().getIdentifier(uri2, null, getPackageName());
 
-        dice2Anim.play(ObjectAnimator.ofFloat(diceImage2, "scaleX", 0, 1))
-                .with(ObjectAnimator.ofFloat(diceImage2, "scaleY", 0, 1));
+                Drawable res1 = getResources().getDrawable(imageResource1, null);
+                Drawable res2 = getResources().getDrawable(imageResource2, null);
 
-        dice2Anim.setStartDelay(0);
-        dice2Anim.setDuration(500);
-        dice2Anim.start();
-        //******************
+                diceImage1.setImageDrawable(res1);
+                diceImage2.setImageDrawable(res2);
 
+                if (animation == diceAnim1)
+                {
+                    diceImage1.setImageDrawable(res1);
+                }
+                else if (animation == diceAnim2)
+                {
+                    diceImage2.setImageDrawable(res2);
+                }
+
+                rollDice.setEnabled(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        };
+
+        diceAnim1.setAnimationListener(animationListener);
+        diceAnim2.setAnimationListener(animationListener);
+
+        diceImage1.startAnimation(diceAnim1);
+        diceImage2.startAnimation(diceAnim2);
+    }
+
+    //****************************************************
+    // Handles functionality for player winning the round
+    //****************************************************
+    private void gameWin(int dice1, int dice2)
+    {
         if (dice1 == dice2)
         {
-            textDisplay.setText("Player " + player + " wins !");
-
             //************************
             // Animating text display
             //************************
+            textDisplay.setText("Player " + player + " wins !");
+
             AnimatorSet flash = new AnimatorSet();
 
             flash.play(ObjectAnimator.ofFloat(textDisplay, "scaleX", 0, 1))
@@ -271,7 +312,6 @@ public class GameActivity extends AppCompatActivity
             flash.setStartDelay(0);
             flash.setDuration(500);
             flash.start();
-            //************************
 
             //TODO: Wait for 150 milliseconds
 
@@ -307,18 +347,6 @@ public class GameActivity extends AppCompatActivity
                     highestRollText.setText("Highest Roll: " + highestRoll + ". By Player 2");
                 }
             }
-            //************************
         }
-
-        if (player == 1)
-        {
-            player = 2;
-        }
-        else
-        {
-            player = 1;
-        }
-
-        rollDice.setEnabled(true);
     }
 }
