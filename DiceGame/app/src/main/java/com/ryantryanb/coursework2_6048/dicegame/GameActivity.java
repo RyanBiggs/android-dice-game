@@ -2,7 +2,8 @@ package com.ryantryanb.coursework2_6048.dicegame;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,16 +12,27 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+
+import com.ryantryanb.coursework2_6048.dicegame.adapter.CustomListAdapter;
+import com.ryantryanb.coursework2_6048.dicegame.model.Scores;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity
 {
     public static final Random RANDOM = new Random();
-
+    private DiceSQLiteOpenHelper dsoh;
+    private List<Scores> scoresList = new ArrayList<Scores>();
+    private ListView listView;
+    private CustomListAdapter adapter;
     private Button rollDice;
-    private Button highScores;
+    private Button clearScores;
     private Button returnToMenu;
 
     private ImageView diceImage1;
@@ -30,17 +42,11 @@ public class GameActivity extends AppCompatActivity
 
     private static int player = 1;
 
-    // TODO
-    //************************
-    // SET UP FOR HIGH SCORES
-    //************************
-    private TextView highScoresTest1;
-    private TextView highScoresTest2;
-    private TextView highestRollText;
-    private int totalWinsPlayer1;
-    private int TotalWinsPlayer2;
+
+
     private int currentRoll = 0;
     private int highestRoll = 0;
+
     //************************
 
     public static int randomDiceValue()
@@ -48,13 +54,27 @@ public class GameActivity extends AppCompatActivity
         return RANDOM.nextInt(6) + 1;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        //****************
+        //Insert data into columns
+        dsoh = new DiceSQLiteOpenHelper(this);
 
-        highScores = findViewById(R.id.btHighScores);
+        if(dsoh.getScores().size() == 0) {
+            dsoh.insertScores(new Scores("1", 0));
+            dsoh.insertScores(new Scores("2", 0));
+        }
+        //*******************
+
+
+        setupList();
+
+        clearScores = findViewById(R.id.btClearScores);
         returnToMenu = findViewById(R.id.btReturnMenu);
         rollDice = findViewById(R.id.btRollDice);
 
@@ -62,34 +82,40 @@ public class GameActivity extends AppCompatActivity
         diceImage2 = findViewById(R.id.diceImage2);
         textDisplay = findViewById(R.id.textDisplay);
 
-        // TODO
-        //************************
-        // SET UP FOR HIGH SCORES
-        //************************
-        highScoresTest1 = findViewById(R.id.highScoresTest1);
-        highScoresTest2 = findViewById(R.id.highScoresTest2);
-        highestRollText = findViewById(R.id.highestRollText);
+        //*****************************
+
+
+
+
         //************************
 
-        onClickHighScores();
+        //onClickHighScores();
         onClickReturnMenu();
         onClickRollDice();
     }
 
+
+    protected void onResume() {
+        super.onResume();
+
+        if (listView!= null) {
+            listView.invalidateViews();
+        }
+        adapter.notifyDataSetChanged();
+    }
+//todo add clear score functionality********* Need to remove the high score activity (not sure why i havent yet tbh), sort out the button name and stuff too, last thing on my list!
+
     //***********************************************
     // On click event handler for high scores button
     //***********************************************
-    private void onClickHighScores()
-    {
-        highScores.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                launchHighScoresActivity();
-            }
-        });
-    }
+  // private void onClickHighScores()
+  // {
+  //     highScores.setOnClickListener(new View.OnClickListener()
+  //     {
+  //         @Override
+  //
+  //     });
+  // }
 
     //**************************************************
     // On click event handler for return to menu button
@@ -122,14 +148,43 @@ public class GameActivity extends AppCompatActivity
         });
     }
 
-    //*******************************************
-    // Intent for changing to HighScoresActivity
-    //*******************************************
-    private void launchHighScoresActivity()
-    {
-        Intent intent = new Intent(this, HighScoresActivity.class);
-        startActivity(intent);
+    //Update player one score upon win
+    //fixme It makes the list disappear when they win, need to fix
+    public void playerOneWins() {
+
+        SQLiteDatabase myDB = dsoh.getWritableDatabase();
+
+        myDB.execSQL("UPDATE scores SET score = score + 1 WHERE player = 1");
+
+        myDB.close();
+        adapter.refreshList(scoresList);
+
     }
+
+    //Populate the listView
+    public void setupList() {
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new CustomListAdapter(this, scoresList);
+        listView.setAdapter(adapter);
+
+        SQLiteDatabase myDB = dsoh.getReadableDatabase();
+
+        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
+
+        if (cursor.moveToFirst()) {
+
+            while (!cursor.isAfterLast()) {
+                Scores scores = new Scores();
+                scores.setPlayer(cursor.getString(0));
+                scores.setScore(cursor.getInt(1));
+
+                scoresList.add(scores);
+                cursor.moveToNext();
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 
     //*************************************
     // Handles functionality for dice game
@@ -315,38 +370,25 @@ public class GameActivity extends AppCompatActivity
 
             //TODO: Wait for 150 milliseconds
 
-            // TODO
-            //************************
-            // SET UP FOR HIGH SCORES
-            //************************
-            if ((dice1 + dice2) > currentRoll)
-            {
-                highestRoll = dice1 + dice2;
-            }
+            // TODO making it so it increments the score when a win occurs
 
-            currentRoll = dice1 + dice2;
-
-            if (player == 1)
-            {
-                totalWinsPlayer1++;
-
-                highScoresTest1.setText("Total Wins Player 1: " + totalWinsPlayer1);
-
-                if (highestRoll >= currentRoll)
-                {
-                    highestRollText.setText("Highest Roll: " + highestRoll + ". By Player 1");
+                if ((dice1 + dice2) > currentRoll) {
+                    highestRoll = dice1 + dice2;
                 }
-            }
-            else {
-                TotalWinsPlayer2++;
 
-                highScoresTest2.setText("Total Wins Player 2: " + TotalWinsPlayer2);
+                currentRoll = dice1 + dice2;
 
-                if (highestRoll >= currentRoll)
-                {
-                    highestRollText.setText("Highest Roll: " + highestRoll + ". By Player 2");
+                if (player == 1) {
+
+                    playerOneWins();
+
+
                 }
-            }
+                else {
+                    //todo player 2 win
+                    //player 1 for testing purposes for now
+                    playerOneWins();
+                }
         }
     }
 }

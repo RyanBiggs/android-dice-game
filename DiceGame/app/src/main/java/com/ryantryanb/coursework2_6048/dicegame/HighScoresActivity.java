@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
+//todo remove this activity
 public class HighScoresActivity extends AppCompatActivity
 {
     private Button rtn;
