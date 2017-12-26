@@ -1,3 +1,10 @@
+//*********************************
+// MainActivity.java
+//*********************************
+// Code created and maintained by:
+// Ryan Tinman
+//*********************************
+
 package com.ryantryanb.coursework2_6048.dicegame;
 
 import android.content.Intent;
@@ -10,7 +17,6 @@ public class MainActivity extends AppCompatActivity
 {
     private Button startGame;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -19,9 +25,7 @@ public class MainActivity extends AppCompatActivity
 
         startGame = findViewById(R.id.btStartGame);
 
-
         onClickStartGame();
-
     }
 
     //**********************************************
@@ -39,11 +43,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    //**************************************************
-    // On click event handler for return to menu button
-    //**************************************************
-
-
     //*************************************
     // Intent for changing to GameActivity
     //*************************************
@@ -52,7 +51,4 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
-
-
-
 }

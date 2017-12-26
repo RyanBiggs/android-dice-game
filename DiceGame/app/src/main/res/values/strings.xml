@@ -4,4 +4,13 @@
     <string name="btn_start_game">Start Game</string>
     <string name="btn_return_to_menu">Return to Menu</string>
     <string name="btn_return_from_scores">Return</string>
+    <string name="btn_remove_player">Remove Player</string>
+    <string name="btn_clear_scores">Clear Scores</string>
+    <string name="btn_roll_dice">Roll Dice</string>
+    <string name="desc_dice_1">Dice 1</string>
+    <string name="desc_dice_2">Dice 2</string>
+    <string name="txt_text_display">Click on Roll Dice!</string>
+    <string name="lbl_player">Player</string>
+    <string name="lbl_score">Score</string>
+    <string name="btn_add_player">Add Player</string>
 </resources>
