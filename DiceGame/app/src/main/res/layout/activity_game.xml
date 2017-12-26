@@ -110,12 +110,42 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="53dp"
         app:layout_constraintBottom_toTopOf="@+id/btHighScores"
         app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diceImage2"
         app:layout_constraintVertical_bias="0.598" />
+
+    <TextView
+        android:id="@+id/playerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Player"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintLeft_toLeftOf="@+id/diceImage1"
+        app:layout_constraintRight_toLeftOf="@+id/diceImage2"
+        app:layout_constraintTop_toBottomOf="@+id/diceImage1" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="193dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Score"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintLeft_toRightOf="@+id/playerText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diceImage2"
+        app:layout_constraintVertical_bias="0.55" />
 
 </android.support.constraint.ConstraintLayout>

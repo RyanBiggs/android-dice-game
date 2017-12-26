@@ -47,9 +47,9 @@ public class CustomListAdapter extends BaseAdapter {
         return position;
     }
 
-    public void refreshList(List<Scores> scoresScores) {
+    public void refreshList(List<Scores> scoresScores1) {
         this.scoresScores.clear();
-        this.scoresScores.addAll(scoresScores);
+        this.scoresScores.addAll(scoresScores1);
         notifyDataSetChanged();
     }
 

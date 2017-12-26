@@ -89,7 +89,7 @@ public class GameActivity extends AppCompatActivity
 
         //************************
 
-        //onClickHighScores();
+        onClickClearScores();
         onClickReturnMenu();
         onClickRollDice();
     }
@@ -108,14 +108,18 @@ public class GameActivity extends AppCompatActivity
     //***********************************************
     // On click event handler for high scores button
     //***********************************************
-  // private void onClickHighScores()
-  // {
-  //     highScores.setOnClickListener(new View.OnClickListener()
-  //     {
-  //         @Override
-  //
-  //     });
-  // }
+     private void onClickClearScores()
+     {
+         clearScores.setOnClickListener(new View.OnClickListener() {
+
+             @Override
+             public void onClick(View view)
+             {
+               clearScores();
+             }
+
+         });
+     }
 
     //**************************************************
     // On click event handler for return to menu button
@@ -149,7 +153,6 @@ public class GameActivity extends AppCompatActivity
     }
 
     //Update player one score upon win
-    //fixme It makes the list disappear when they win, need to fix
     public void playerOneWins() {
 
         SQLiteDatabase myDB = dsoh.getWritableDatabase();
@@ -157,9 +160,27 @@ public class GameActivity extends AppCompatActivity
         myDB.execSQL("UPDATE scores SET score = score + 1 WHERE player = 1");
 
         myDB.close();
-        adapter.refreshList(scoresList);
+
+        updateList();
+
 
     }
+
+
+    //Update player two score upon win
+    public void playerTwoWins() {
+
+        SQLiteDatabase myDB = dsoh.getWritableDatabase();
+
+        myDB.execSQL("UPDATE scores SET score = score + 1 WHERE player = 2");
+
+        myDB.close();
+
+        updateList();
+
+
+    }
+
 
     //Populate the listView
     public void setupList() {
@@ -185,6 +206,30 @@ public class GameActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    //method for updating the listview upon a change
+    public void updateList() {
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new CustomListAdapter(this, scoresList);
+        listView.setAdapter(adapter);
+
+        SQLiteDatabase myDB = dsoh.getReadableDatabase();
+
+        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
+
+        if (cursor.moveToFirst()) {
+            this.scoresList.clear();
+            while (!cursor.isAfterLast()) {
+                Scores scores = new Scores();
+
+                scores.setPlayer(cursor.getString(0));
+                scores.setScore(cursor.getInt(1));
+
+                scoresList.add(scores);
+                cursor.moveToNext();
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
     //*************************************
     // Handles functionality for dice game
@@ -385,10 +430,17 @@ public class GameActivity extends AppCompatActivity
 
                 }
                 else {
-                    //todo player 2 win
-                    //player 1 for testing purposes for now
-                    playerOneWins();
+                    playerTwoWins();
                 }
         }
+    }
+    private void clearScores() {
+        SQLiteDatabase myDB = dsoh.getWritableDatabase();
+
+        myDB.execSQL("UPDATE scores SET score = 0");
+
+        myDB.close();
+
+        updateList();
     }
 }

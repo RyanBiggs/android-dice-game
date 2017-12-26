@@ -9,7 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
     private Button startGame;
-    private Button highScores;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         startGame = findViewById(R.id.btStartGame);
-        highScores = findViewById(R.id.btHighScores);
+
 
         onClickStartGame();
-        onClickReturnMenu();
+
     }
 
     //**********************************************
@@ -42,17 +42,7 @@ public class MainActivity extends AppCompatActivity
     //**************************************************
     // On click event handler for return to menu button
     //**************************************************
-    private void onClickReturnMenu()
-    {
-        highScores.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                launchHighScoresActivity();
-            }
-        });
-    }
+
 
     //*************************************
     // Intent for changing to GameActivity
@@ -63,13 +53,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    //*******************************************
-    // Intent for changing to HighScoresActivity
-    //*******************************************
-    private void launchHighScoresActivity()
-    {
-        Intent intent = new Intent(this, HighScoresActivity.class);
-        startActivity(intent);
-    }
+
 
 }

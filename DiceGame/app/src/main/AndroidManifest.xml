@@ -20,7 +20,6 @@
 
         <activity android:name=".GameActivity" />
 
-        <activity android:name=".HighScoresActivity"></activity>
     </application>
 
 </manifest>
