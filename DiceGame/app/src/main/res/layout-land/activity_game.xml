@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ryantryanb.coursework2_6048.dicegame.GameActivity"
+    tools:context="com.ryantryanb.coursework2_6048.dicegame.activity.GameActivity"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -60,33 +60,33 @@
     <ImageView
         android:id="@+id/diceImage1"
         android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="53dp"
         android:contentDescription="@string/desc_dice_1"
         android:src="@drawable/one"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/diceImage2"
-        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/textDisplay"
         app:layout_constraintTop_toTopOf="@+id/diceImage2"
-        app:layout_constraintLeft_toRightOf="@+id/textDisplay" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
 
     <ImageView
         android:id="@+id/diceImage2"
         android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="31dp"
+        android:layout_marginTop="64dp"
         android:contentDescription="@string/desc_dice_2"
         android:src="@drawable/one"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="64dp"
-        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/diceImage1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/diceImage1" />
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
 
     <TextView
         android:id="@+id/textDisplay"

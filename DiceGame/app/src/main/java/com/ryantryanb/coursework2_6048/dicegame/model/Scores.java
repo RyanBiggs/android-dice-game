@@ -1,40 +1,58 @@
+//*********************************
+// Scores.java
+//*********************************
+// Code created and maintained by:
+// Ryan Biggs
+//*********************************
+
 package com.ryantryanb.coursework2_6048.dicegame.model;
 
-/**
- * Plain old java object
- *
- * Scores Model
- */
-
-public class Scores {
-
-
+public class Scores
+{
     private String player;
     private int score;
 
-    public Scores() {
+    //  Initialisation
+    public Scores()
+    {
     }
 
-    public Scores(String player, int score) {
-
+    // Constructor
+    public Scores(String player, int score)
+    {
         this.player = player;
         this.score = score;
-
     }
 
-    public String getPlayer() {
+    //*******************
+    // Getter for player
+    //*******************
+    public String getPlayer()
+    {
         return player;
     }
 
-    public void setPlayer(String player) {
+    //*******************
+    // Setter for player
+    //*******************
+    public void setPlayer(String player)
+    {
         this.player = player;
     }
 
-    public int getScore() {
+    //******************
+    // Getter for score
+    //******************
+    public int getScore()
+    {
         return score;
     }
 
-    public void setScore(int score) {
+    //******************
+    // Setter for score
+    //******************
+    public void setScore(int score)
+    {
         this.score = score;
     }
 }

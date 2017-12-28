@@ -5,7 +5,7 @@
 // Ryan Biggs
 //*********************************
 
-package com.ryantryanb.coursework2_6048.dicegame;
+package com.ryantryanb.coursework2_6048.dicegame.sql;
 
 import com.ryantryanb.coursework2_6048.dicegame.model.Scores;
 
@@ -18,8 +18,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.LinkedList;
 import java.util.List;
 
-
+//*******************************
 // SQLite Database Handler Class
+//*******************************
 public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
 {
     private static final int DATABASE_VERSION = 1;
@@ -47,17 +48,15 @@ public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
     //**************************
     public List<Scores> getScores()
     {
-        // TODO: Biggs, add comments
+        SQLiteDatabase myDB = this.getReadableDatabase();               // Connect to DB
 
-        SQLiteDatabase myDB = this.getReadableDatabase();
+        List<Scores> scores = new LinkedList<>();                       // TODO
 
-        List<Scores> scores = new LinkedList<>();
+        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);         // TODO
 
-        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);
-
-        while (c.moveToNext())
+        while (c.moveToNext())                                          // TODO
         {
-            scores.add(new Scores(c.getString(0), c.getInt(1)));
+            scores.add(new Scores(c.getString(0), c.getInt(1)));        // TODO
         }
 
         return scores;
@@ -68,17 +67,34 @@ public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
     //**************************
     public void setScores(Scores scores)
     {
-        // TODO: Biggs, add comments
+        SQLiteDatabase myDB = this.getWritableDatabase();       // Connect to DB
 
-        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();                 // TODO
 
-        ContentValues cv = new ContentValues();
+        cv.put("player", scores.getPlayer());                   // TODO
+        cv.put("score", scores.getScore());                     // TODO
 
-        cv.put("player", scores.getPlayer());
-        cv.put("score", scores.getScore());
+        myDB.insert("scores", null, cv);                        // TODO
+        myDB.close();                                           // Close DB connection
+    }
 
-        myDB.insert("scores", null, cv);
-        myDB.close();
+    //***************************
+    // Getter method for players
+    //***************************
+    public List<Scores> getPlayers()
+    {
+        SQLiteDatabase myDB = this.getReadableDatabase();               // Connect to DB
+
+        List<Scores> scores = new LinkedList<>();                       // TODO
+
+        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);         // TODO
+
+        while (c.moveToNext())                                          // TODO
+        {
+            scores.add(new Scores(c.getString(0), c.getInt(1)));        // TODO
+        }
+
+        return scores;
     }
 
     //*******************************************

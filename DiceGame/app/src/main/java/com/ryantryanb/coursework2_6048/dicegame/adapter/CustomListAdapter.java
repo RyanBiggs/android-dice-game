@@ -1,4 +1,14 @@
+//*********************************
+// CustomListAdapter.java
+//*********************************
+// Code created and maintained by:
+// Ryan Biggs
+//*********************************
+
 package com.ryantryanb.coursework2_6048.dicegame.adapter;
+
+import com.ryantryanb.coursework2_6048.dicegame.R;
+import com.ryantryanb.coursework2_6048.dicegame.model.Scores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,87 +17,98 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.ryantryanb.coursework2_6048.dicegame.R;
-import com.ryantryanb.coursework2_6048.dicegame.model.Scores;
-
 import java.util.List;
 
-/**
- * Custom List Adapter for GameActivity List View
- */
-
-
-
-public class CustomListAdapter extends BaseAdapter {
-
+public class CustomListAdapter extends BaseAdapter
+{
     private Context mContext;
-    private LayoutInflater inflater;
-    private List<Scores> scoresScores;
+    private LayoutInflater layoutInflater;
+    private List<Scores> scoresList;
 
-
-
-    public CustomListAdapter(Context context, List<Scores> scoresScores) {
+    // Constructor
+    public CustomListAdapter(Context context, List<Scores> scoresList)
+    {
         this.mContext = context;
-        this.scoresScores = scoresScores;
-
+        this.scoresList = scoresList;
     }
 
+    //******************
+    // Getter for count
+    //******************
     @Override
-    public int getCount() {
-        return scoresScores.size();
+    public int getCount()
+    {
+        return scoresList.size();
     }
 
+    //*****************
+    // Getter for item
+    //*****************
     @Override
-    public Object getItem(int location) {
-        return scoresScores.get(location);
+    public Object getItem(int location)
+    {
+        return scoresList.get(location);
     }
 
+    //********************
+    // Getter for item id
+    //********************
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
-    public void refreshList(List<Scores> scoresScores1) {
-        this.scoresScores.clear();
-        this.scoresScores.addAll(scoresScores1);
-        notifyDataSetChanged();
+    //********************************
+    // //TODO: Biggs, describe method
+    //********************************
+    public void refreshList(List<Scores> scores)
+    {
+        this.scoresList.clear();             // TODO
+        this.scoresList.addAll(scores);      // TODO
+        notifyDataSetChanged();              // TODO
     }
 
+    //********************************
+    // //TODO: Biggs, describe method
+    //********************************
     @Override
-    public View getView(int position, View scoreView, ViewGroup parent) {
+    public View getView(int position, View scoreView, ViewGroup parent)
+    {
         ViewHolder holder;
-        if (inflater == null) {
-            inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-        if (scoreView == null) {
 
-            scoreView = inflater.inflate(R.layout.list_row, parent, false);
-            holder = new ViewHolder();
-            holder.player = (TextView) scoreView.findViewById(R.id.player);
-            holder.score = (TextView) scoreView.findViewById(R.id.score);
+        if (layoutInflater == null)                                                                           // TODO
+            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);     // TODO
 
-            scoreView.setTag(holder);
+        if (scoreView == null)                                                      // TODO
+        {
+            scoreView = layoutInflater.inflate(R.layout.list_row, parent, false);   // TODO
+            holder = new ViewHolder();                                              // TODO
+            holder.player = scoreView.findViewById(R.id.player);                    // TODO
+            holder.score = scoreView.findViewById(R.id.score);                      // TODO
 
-        } else {
-            holder = (ViewHolder) scoreView.getTag();
+            scoreView.setTag(holder);                                               // TODO
         }
 
-        final Scores m = scoresScores.get(position);
-        holder.player.setText(m.getPlayer());
-        holder.score.setText(String.valueOf(m.getScore()));
+        else                                                                        // TODO
+            holder = (ViewHolder) scoreView.getTag();                               // TODO
 
-        return scoreView;
+        final Scores m = scoresList.get(position);                                  // TODO
+
+        holder.player.setText(m.getPlayer());                                       // TODO
+        holder.score.setText(String.valueOf(m.getScore()));                         // TODO
+
+        return scoreView;                                                           // TODO
     }
 
-
-
-    static class ViewHolder {
-
+    //********************************
+    // //TODO: Biggs, describe method
+    //********************************
+    static class ViewHolder
+    {
         TextView player;
         TextView score;
-
     }
-
 }
 
 
