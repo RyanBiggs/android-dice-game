@@ -60,49 +60,39 @@ public class CustomListAdapter extends BaseAdapter
     }
 
     //********************************
-    // //TODO: Biggs, describe method
-    //********************************
-    public void refreshList(List<Scores> scores)
-    {
-        this.scoresList.clear();             // TODO
-        this.scoresList.addAll(scores);      // TODO
-        notifyDataSetChanged();              // TODO
-    }
-
-    //********************************
-    // //TODO: Biggs, describe method
+    // Creates each ListView row
     //********************************
     @Override
     public View getView(int position, View scoreView, ViewGroup parent)
     {
         ViewHolder holder;
 
-        if (layoutInflater == null)                                                                           // TODO
-            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);     // TODO
+        if (layoutInflater == null)
+            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (scoreView == null)                                                      // TODO
+        if (scoreView == null)
         {
-            scoreView = layoutInflater.inflate(R.layout.list_row, parent, false);   // TODO
-            holder = new ViewHolder();                                              // TODO
-            holder.player = scoreView.findViewById(R.id.player);                    // TODO
-            holder.score = scoreView.findViewById(R.id.score);                      // TODO
+            scoreView = layoutInflater.inflate(R.layout.list_row, parent, false);   // Inflate list_row.xml file for each row
+            holder = new ViewHolder();                                              // View Holder Object to contain list_row.xml file elements
+            holder.player = scoreView.findViewById(R.id.player);
+            holder.score = scoreView.findViewById(R.id.score);
 
-            scoreView.setTag(holder);                                               // TODO
+            scoreView.setTag(holder);                                               // Set holder with LayoutInflater
         }
 
-        else                                                                        // TODO
-            holder = (ViewHolder) scoreView.getTag();                               // TODO
+        else
+            holder = (ViewHolder) scoreView.getTag();
 
-        final Scores m = scoresList.get(position);                                  // TODO
+        final Scores m = scoresList.get(position);
 
-        holder.player.setText(m.getPlayer());                                       // TODO
-        holder.score.setText(String.valueOf(m.getScore()));                         // TODO
+        holder.player.setText(m.getPlayer());
+        holder.score.setText(String.valueOf(m.getScore()));
 
-        return scoreView;                                                           // TODO
+        return scoreView;
     }
 
     //********************************
-    // //TODO: Biggs, describe method
+    // Create a holder class to contain inflated xml elements
     //********************************
     static class ViewHolder
     {

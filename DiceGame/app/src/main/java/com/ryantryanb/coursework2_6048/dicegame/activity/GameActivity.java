@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity
 
     private TextView textDisplay;
 
-    private static int player = 0;
+    private static byte player = 0;
 
     private int currentRoll = 0;
     private int highestRoll = 0;
@@ -104,15 +104,7 @@ public class GameActivity extends AppCompatActivity
         numOfPlayers = sqlHelper.getScores().size();
     }
 
-    protected void onResume()
-    {
-        super.onResume();
 
-        if (listView != null)               // Error Checking
-            listView.invalidateViews();
-
-        listAdapter.notifyDataSetChanged();
-    }
 
     //*********************************************
     // On click event handler for roll dice button
@@ -422,29 +414,30 @@ public class GameActivity extends AppCompatActivity
     //***************************************************
     public void setupList()
     {
-        listAdapter = new CustomListAdapter(this, scoresList);          // TODO
-        listView.setAdapter(listAdapter);                               // TODO
+        listAdapter = new CustomListAdapter(this, scoresList);          // Assign the List Adapter
+        listView.setAdapter(listAdapter);
 
-        SQLiteDatabase myDB = sqlHelper.getReadableDatabase();          // Connect to DB
 
-        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);    // TODO
+        SQLiteDatabase myDB = sqlHelper.getReadableDatabase();          // Open DB Connection
 
-        if (cursor.moveToFirst())                                       // TODO
+        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);    // Assign a Cursor using an SQL Query
+
+        if (cursor.moveToFirst())                                       // Move the Cursor to the first player
         {
-            while (!cursor.isAfterLast())                               // TODO
+            while (!cursor.isAfterLast())                               // If the Cursor is before the last player, run the loop again
             {
-                Scores scores = new Scores();                           // TODO
-                scores.setPlayer(cursor.getString(0));                  // TODO
-                scores.setScore(cursor.getInt(1));                      // TODO
+                Scores scores = new Scores();                           // The loop fetches the player number and score for each player and adds them to the list view
+                scores.setPlayer(cursor.getString(0));
+                scores.setScore(cursor.getInt(1));
 
-                scoresList.add(scores);                                 // TODO
-                cursor.moveToNext();                                    // TODO
+                scoresList.add(scores);
+                cursor.moveToNext();
             }
         }
 
-        listAdapter.notifyDataSetChanged();                             // TODO
+        listAdapter.notifyDataSetChanged();                             // Notify the ListView data has changed and needs to be refreshed
 
-        cursor.close();                                                 // Close DB connection
+        cursor.close();                                                 // Close Cursor
     }
 
     //*************************************************
@@ -452,32 +445,33 @@ public class GameActivity extends AppCompatActivity
     //*************************************************
     public void updateList()
     {
-        listAdapter = new CustomListAdapter(this, scoresList);          // TODO
-        listView.setAdapter(listAdapter);                               // TODO
+        listAdapter = new CustomListAdapter(this, scoresList);          // Assign the List Adapter
+        listView.setAdapter(listAdapter);
 
-        SQLiteDatabase myDB = sqlHelper.getReadableDatabase();          // Connect to DB
+        SQLiteDatabase myDB = sqlHelper.getReadableDatabase();          // Open DB Connection
 
-        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);    // TODO
+        Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);    // Assign a Cursor using an SQL Query
 
-        if (cursor.moveToFirst())                                       // TODO
+        if (cursor.moveToFirst())                                       // Move the Cursor to the first player
         {
-            this.scoresList.clear();                                    // TODO
+            this.scoresList.clear();                                    // Clear the ListView in order to repopulate with the updated data
 
-            while (!cursor.isAfterLast())                               // TODO
+            while (!cursor.isAfterLast())                               // If the Cursor is before the last player, run the loop again
             {
-                Scores scores = new Scores();                           // TODO
+                Scores scores = new Scores();                           // The loop fetches the player number and score for each player and adds them to the list view
 
-                scores.setPlayer(cursor.getString(0));                  // TODO
-                scores.setScore(cursor.getInt(1));                      // TODO
 
-                scoresList.add(scores);                                 // TODO
-                cursor.moveToNext();                                    // TODO
+                scores.setPlayer(cursor.getString(0));
+                scores.setScore(cursor.getInt(1));
+
+                scoresList.add(scores);
+                cursor.moveToNext();
             }
         }
 
-        listAdapter.notifyDataSetChanged();                             // TODO
+        listAdapter.notifyDataSetChanged();                             // Notify the ListView data has changed and needs to be refreshed
 
-        cursor.close();                                                 // Close DB connection
+        cursor.close();                                                 // Close Cursor
     }
 
     //*******************************************

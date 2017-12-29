@@ -34,13 +34,13 @@ public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase myDB)
     {
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS scores (player TEXT, score INT)");
+        myDB.execSQL("CREATE TABLE IF NOT EXISTS scores (player TEXT, score INT)"); //Initial create table statement if the table does not already exist
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion)
     {
-        myDB.execSQL("DROP TABLE IF EXISTS scores");
+        myDB.execSQL("DROP TABLE IF EXISTS scores");                            //On upgrading database, delete the table
     }
 
     //**************************
@@ -48,64 +48,47 @@ public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
     //**************************
     public List<Scores> getScores()
     {
-        SQLiteDatabase myDB = this.getReadableDatabase();               // Connect to DB
+        SQLiteDatabase myDB = this.getReadableDatabase();               // Create a readable connection to DB
 
-        List<Scores> scores = new LinkedList<>();                       // TODO
+        List<Scores> scores = new LinkedList<>();                       // List of scores from generic Scores
 
-        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);         // TODO
+        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);         // Result of query assigned to cursor
 
-        while (c.moveToNext())                                          // TODO
+        while (c.moveToNext())
         {
-            scores.add(new Scores(c.getString(0), c.getInt(1)));        // TODO
+            scores.add(new Scores(c.getString(0), c.getInt(1)));        // Rows from cursor constructed into a new score and assigned the list scores
         }
 
         return scores;
     }
 
     //**************************
-    // Setter method for scores
+    // Method for inserting rows into the database
     //**************************
     public void setScores(Scores scores)
     {
         SQLiteDatabase myDB = this.getWritableDatabase();       // Connect to DB
 
-        ContentValues cv = new ContentValues();                 // TODO
+        ContentValues cv = new ContentValues();
 
-        cv.put("player", scores.getPlayer());                   // TODO
-        cv.put("score", scores.getScore());                     // TODO
+        cv.put("player", scores.getPlayer());                   // Populate cv variable with the data for a new scores
+        cv.put("score", scores.getScore());
 
-        myDB.insert("scores", null, cv);                        // TODO
+        myDB.insert("scores", null, cv);                        // SQLite insert method
         myDB.close();                                           // Close DB connection
     }
 
-    //***************************
-    // Getter method for players
-    //***************************
-    public List<Scores> getPlayers()
-    {
-        SQLiteDatabase myDB = this.getReadableDatabase();               // Connect to DB
 
-        List<Scores> scores = new LinkedList<>();                       // TODO
-
-        Cursor c = myDB.rawQuery("SELECT * FROM scores", null);         // TODO
-
-        while (c.moveToNext())                                          // TODO
-        {
-            scores.add(new Scores(c.getString(0), c.getInt(1)));        // TODO
-        }
-
-        return scores;
-    }
 
     //*******************************************
     // Functionality for the removing of players
     //*******************************************
     public boolean removePlayer(int player)
     {
-        // Connecting to DB
-        SQLiteDatabase myDB = this.getWritableDatabase();
 
-        // Deleting player from table
-        return myDB.delete("scores", "player = " + player, null) > 0;
+        SQLiteDatabase myDB = this.getWritableDatabase();            // Connecting to DB
+
+
+        return myDB.delete("scores", "player = " + player, null) > 0;  // Deleting player from table
     }
 }
