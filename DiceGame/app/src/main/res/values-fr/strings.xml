@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jeu de dés</string>
+    <string name="btn_add_player">Ajouter un joueur</string>
+    <string name="btn_clear_scores">Effacer les scores</string>
+    <string name="btn_high_scores">Scores élevés</string>
+    <string name="btn_remove_player">Supprimer le joueur</string>
+    <string name="btn_return_from_scores">Revenir</string>
+    <string name="btn_return_to_menu">Retour au menu</string>
+    <string name="btn_roll_dice">Roulez les dés</string>
+    <string name="btn_start_game">Démarrer jeu</string>
+    <string name="desc_dice_1">Dés 1</string>
+    <string name="desc_dice_2">Dés 2</string>
+    <string name="lbl_player">Joueur</string>
+    <string name="lbl_score">But</string>
+    <string name="txt_text_display">Cliquer rouler les dés</string>
+    <string name="tst_highest_roll_part_1">Meilleur résultat :</string>
+    <string name="tst_highest_roll_part_2">Par joueur :</string>
+    <string name="tst_max_player_reached">Nombre maximal de joueurs atteint!</string>
+    <string name="tst_must_have_2_players">Doit avoir au moins 2 joueurs!</string>
+    <string name="tst_scores_cleared">Scores nettoyés!</string>
+</resources>

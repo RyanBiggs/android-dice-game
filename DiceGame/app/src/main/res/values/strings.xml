@@ -13,4 +13,9 @@
     <string name="lbl_player">Player</string>
     <string name="lbl_score">Score</string>
     <string name="btn_add_player">Add Player</string>
+    <string name="tst_max_player_reached">Maximum player count reached!</string>
+    <string name="tst_must_have_2_players">Must have at least 2 players!</string>
+    <string name="tst_highest_roll_part_1">Highest Scoring Roll :</string>
+    <string name="tst_highest_roll_part_2">By Player :</string>
+    <string name="tst_scores_cleared">Scores Cleared!</string>
 </resources>

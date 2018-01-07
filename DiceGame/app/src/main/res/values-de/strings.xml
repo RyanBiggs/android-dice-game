@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Würfelspiel</string>
+    <string name="btn_add_player">Spieler hinzufügen</string>
+    <string name="btn_clear_scores">Punkte löschen</string>
+    <string name="btn_high_scores">Highscore</string>
+    <string name="btn_remove_player">Entferne den Spieler</string>
+    <string name="btn_return_from_scores">Rückkehr</string>
+    <string name="btn_return_to_menu">Zurück zum Menü</string>
+    <string name="btn_roll_dice">Würfeln</string>
+    <string name="btn_start_game">Spiel beginnen</string>
+    <string name="desc_dice_1">Würfel 1</string>
+    <string name="desc_dice_2">Würfel 2</string>
+    <string name="lbl_player">Spieler</string>
+    <string name="lbl_score">Ergebnis</string>
+    <string name="txt_text_display">Klicken Sie auf Rollenwürfel</string>
+    <string name="tst_highest_roll_part_1">Höchste Wertungsrolle :</string>
+    <string name="tst_highest_roll_part_2">Nach Spieler :</string>
+    <string name="tst_max_player_reached">Maximale Spieleranzahl erreicht!</string>
+    <string name="tst_must_have_2_players">Muss mindestens 2 Spieler haben!</string>
+    <string name="tst_scores_cleared">Punkte gelöscht!</string>
+</resources>

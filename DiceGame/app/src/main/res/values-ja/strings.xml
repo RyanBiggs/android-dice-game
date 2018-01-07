@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ダイスゲーム</string>
+    <string name="txt_text_display">ロールダイスをクリック</string>
+    <string name="lbl_score">スコア</string>
+    <string name="lbl_player">プレーヤー</string>
+    <string name="desc_dice_2">ダイス1</string>
+    <string name="desc_dice_1">ダイス2</string>
+    <string name="btn_start_game">ゲームをスタート</string>
+    <string name="btn_roll_dice">さいころを振る</string>
+    <string name="btn_return_to_menu">メニューに戻る</string>
+    <string name="btn_return_from_scores">戻る</string>
+    <string name="btn_remove_player">プレーヤーを削除</string>
+    <string name="btn_high_scores">高得点</string>
+    <string name="btn_clear_scores">クリアスコア</string>
+    <string name="btn_add_player">プレーヤーを追加</string>
+    <string name="tst_scores_cleared">スコアはクリアされました！</string>
+    <string name="tst_must_have_2_players">少なくとも2人のプレイヤーがいなければなりません！</string>
+    <string name="tst_max_player_reached">最大のプレーヤー数に達しました！</string>
+    <string name="tst_highest_roll_part_2">プレイヤー別 ：</string>
+    <string name="tst_highest_roll_part_1">最高スコアリング ：</string>
+</resources>

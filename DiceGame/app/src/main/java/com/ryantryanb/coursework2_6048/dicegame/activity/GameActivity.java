@@ -51,15 +51,16 @@ public class GameActivity extends AppCompatActivity
 
     private static byte player = 0;
 
-    private int currentRoll = 0;
-    private int highestRoll = 0;
+    private byte currentRoll = 0;
+    private byte highestRoll = 0;
+    private byte maxPlayers = 10;
 
     private DiceSQLiteOpenHelper sqlHelper;
     private List<Scores> scoresList = new ArrayList<>();
     private ListView listView;
     private CustomListAdapter listAdapter;
 
-    public int numOfPlayers = 2;        // Keeps track of the number of players in rotation
+    public byte numOfPlayers = 2;        // Keeps track of the number of players in rotation
 
     public static int randomDiceValue()
     {
@@ -101,10 +102,8 @@ public class GameActivity extends AppCompatActivity
         setupList();
         updateList();
 
-        numOfPlayers = sqlHelper.getScores().size();
+        numOfPlayers = (byte) sqlHelper.getScores().size();
     }
-
-
 
     //*********************************************
     // On click event handler for roll dice button
@@ -131,12 +130,22 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                if (numOfPlayers >= 2)                  // If there are 2 or more players
+                if (numOfPlayers >= 2)                  // If there are 2 or more players:
                     removePlayer.setEnabled(true);      // Re-enable remove player button so they can be removed later
 
-                numOfPlayers++;
+                if (numOfPlayers <= maxPlayers - 1)     // If the maximum amount of players hasn't been reached:
+                {
+                    numOfPlayers++;                     // Increment numOfPlayers variable
 
-                sqlHelper.setScores(new Scores(Integer.valueOf(numOfPlayers).toString(), 0));   // Add a new player to the scores list
+                    sqlHelper.setScores(new Scores(Integer.valueOf(numOfPlayers).toString(), 0));   // Add a new player to the scores list
+                }
+
+                else                                                                 // Otherwise: (If maximum player count has been reached)
+                {
+                    addPlayer.setEnabled(false);                                     // Disable remove player button
+
+                    makeToast(getString(R.string.tst_max_player_reached), Toast.LENGTH_LONG);   // Alert user that maximum player count has been reached
+                }
 
                 updateList();       // Update score list
             }
@@ -153,8 +162,10 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                if (numOfPlayers <= maxPlayers)             // If the number of players is less than or equal to the maximum allowed amount:
+                    addPlayer.setEnabled(true);             // Re-enable add player button so they can be re-added later
 
-                if (numOfPlayers > 2)                       // If there are more than 2 players
+                if (numOfPlayers > 2)                       // If there are more than 2 players:
                 {
                     removePlayer.setEnabled(true);          // Enable remove player button
 
@@ -163,11 +174,11 @@ public class GameActivity extends AppCompatActivity
                     numOfPlayers--;
                 }
 
-                else                                                                    // If there are only two players in the rotation
+                else                                                                    // Otherwise: (If there are only two players in the rotation)
                 {
                     removePlayer.setEnabled(false);                                     // Disable remove player button
 
-                    makeToast("Must have at least 2 players!", Toast.LENGTH_LONG);      // Alerts user that there must be at least 2 players
+                    makeToast(getString(R.string.tst_must_have_2_players), Toast.LENGTH_LONG);      // Alerts user that there must be at least 2 players
                 }
 
                 updateList();           // Update score list
@@ -188,7 +199,6 @@ public class GameActivity extends AppCompatActivity
             {
                 clearScores();
             }
-
         });
     }
 
@@ -225,20 +235,17 @@ public class GameActivity extends AppCompatActivity
         if (player == numOfPlayers)     // If current player is last in rotation, go back to player 1
             player = 1;
 
-        else                            // If current player is not last in rotation, go to next player
+        else                            // Otherwise: (If current player is not last in rotation, go to next player)
             player++;
-
 
         if (player > numOfPlayers)      // Error checking
         {
             player = 1;
         }
 
-
-        textAnim("rollText");       // Custom animation method to handle multiple text view animations
+        textAnim("rollText");           // Custom animation method to handle multiple text view animations
 
         textDisplay.setText("Player " + player + " rolls : " + (dice1 + dice2));
-
 
         rollDice.setEnabled(false);         // Disables the roll dice button throughout the rolling process, so
                                             // the user does not press it repeatedly.
@@ -336,7 +343,7 @@ public class GameActivity extends AppCompatActivity
         final Animation DICE1_ANIM = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll_dice);     // Loading animation for dice 1
         final Animation DICE2_ANIM = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll_dice);     // Loading animation for dice 2
 
-        final Animation.AnimationListener ANIMATION_LISTENER = new Animation.AnimationListener()    // Animation listener
+        final Animation.AnimationListener ANIMATION_LISTENER = new Animation.AnimationListener()            // Animation listener
         {
             @Override
             public void onAnimationStart(Animation animation)
@@ -382,27 +389,26 @@ public class GameActivity extends AppCompatActivity
     {
         if (dice1 == dice2)
         {
-
             textAnim("winText");                                                                    // Play text animation for winning a game
 
             textDisplay.setText("Player " + player + " wins with : " + (dice1 + dice2) + "!");      // Sets the text display to show which player won, and with what score
 
 
-            if ((dice1 + dice2) > currentRoll)                                                                          // If the current roll is greater than the highest scoring roll...
+            if ((dice1 + dice2) > currentRoll)                                                      // If the current roll is greater than the highest scoring roll...
             {
-                highestRoll = dice1 + dice2;                                                                            // then the highest roll is updated
+                highestRoll = (byte) (dice1 + dice2);                                               // Then the highest roll is updated
 
-                makeToast("Highest Scoring Roll : " + highestRoll + " By Player : " + player, Toast.LENGTH_SHORT);      // and a toast message shown to inform players.
+                makeToast(getString(R.string.tst_highest_roll_part_1)                               // and a toast message shown to inform players.
+                        + " " + highestRoll
+                        + " " + (getString(R.string.tst_highest_roll_part_2)
+                        + " " + player), Toast.LENGTH_LONG);
             }
 
-            currentRoll = dice1 + dice2;
+            currentRoll = (byte) (dice1 + dice2);
 
+            SQLiteDatabase myDB = sqlHelper.getWritableDatabase();                                                      // Open DB Connection
 
-            SQLiteDatabase myDB = sqlHelper.getWritableDatabase();                                                      // Connecting to DB
-
-
-            myDB.execSQL("UPDATE scores SET score = score + 1 WHERE player = " + Integer.valueOf(player).toString());   // Updating DB with new scores
-
+            myDB.execSQL("UPDATE scores SET score = score + 1 WHERE player = " + Integer.valueOf(player).toString());   // Update DB with new scores
 
             myDB.close();       // Close DB
             updateList();       // Update scores list
@@ -416,7 +422,6 @@ public class GameActivity extends AppCompatActivity
     {
         listAdapter = new CustomListAdapter(this, scoresList);          // Assign the List Adapter
         listView.setAdapter(listAdapter);
-
 
         SQLiteDatabase myDB = sqlHelper.getReadableDatabase();          // Open DB Connection
 
@@ -479,15 +484,15 @@ public class GameActivity extends AppCompatActivity
     //*******************************************
     private void clearScores()
     {
-        SQLiteDatabase myDB = sqlHelper.getWritableDatabase();  // Connect to DB
+        SQLiteDatabase myDB = sqlHelper.getWritableDatabase();                  // Connect to DB
 
-        myDB.execSQL("UPDATE scores SET score = 0");            // Execute raw SQL query
+        myDB.execSQL("UPDATE scores SET score = 0");                            // Execute raw SQL query
 
-        myDB.close();                                           // Close DB connection
+        myDB.close();                                                           // Close DB connection
 
-        updateList();                                           // Update score list
+        updateList();                                                           // Update score list
 
-        makeToast("Scores Cleared!", Toast.LENGTH_LONG);        // Confirmation message
+        makeToast(getString(R.string.tst_scores_cleared), Toast.LENGTH_SHORT);   // Confirmation message
     }
 
     //************************************************
@@ -513,13 +518,13 @@ public class GameActivity extends AppCompatActivity
         {
             case "rollText":
             {
-                textAnim = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll_text);   // Loads the roll text animation
+                textAnim = AnimationUtils.loadAnimation(GameActivity.this, R.anim.roll_text);       // Loads the roll text animation
                 break;
             }
 
             case "winText":
             {
-                textAnim = AnimationUtils.loadAnimation(GameActivity.this, R.anim.win_text);    // Loads the win text animation
+                textAnim = AnimationUtils.loadAnimation(GameActivity.this, R.anim.win_text);        // Loads the win text animation
                 break;
             }
         }

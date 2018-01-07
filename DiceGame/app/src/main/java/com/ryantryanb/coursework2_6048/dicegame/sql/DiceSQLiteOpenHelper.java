@@ -85,9 +85,7 @@ public class DiceSQLiteOpenHelper extends SQLiteOpenHelper
     //*******************************************
     public boolean removePlayer(int player)
     {
-
         SQLiteDatabase myDB = this.getWritableDatabase();            // Connecting to DB
-
 
         return myDB.delete("scores", "player = " + player, null) > 0;  // Deleting player from table
     }

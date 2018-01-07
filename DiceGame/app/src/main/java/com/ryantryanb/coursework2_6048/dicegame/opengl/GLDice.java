@@ -67,11 +67,11 @@ public class GLDice
             float faceWidth = 2.0f;                         // Allocate face width
             float faceHeight = 2.0f;                        // Allocate face height
 
-            if (imgWidth > imgHeight)                               // Setting the aspect ratio
-                faceHeight = faceHeight * imgHeight / imgWidth;     // Landscape
+            if (imgWidth > imgHeight)                               // If image is wider than it is tall:
+                faceHeight = faceHeight * imgHeight / imgWidth;     // Set aspect to Landscape
 
-            else
-                faceWidth = faceWidth * imgWidth / imgHeight;       // Portrait
+            else                                                    // Otherwise: (If image is taller than it is wide)
+                faceWidth = faceWidth * imgWidth / imgHeight;       // Set aspect to Portrait
 
             float faceLeft = -faceWidth / 2;    // Define left face vertex coordinate
             float faceRight = -faceLeft;        // Define right face vertex coordinate

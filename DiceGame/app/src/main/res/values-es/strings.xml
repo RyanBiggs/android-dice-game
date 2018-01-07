@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Juego de dados</string>
+    <string name="txt_text_display">Haga clic en tirar dados</string>
+    <string name="lbl_score">Puntuación</string>
+    <string name="lbl_player">Jugador</string>
+    <string name="desc_dice_2">Dado 2</string>
+    <string name="desc_dice_1">Dado 1</string>
+    <string name="btn_start_game">Empezar juego</string>
+    <string name="btn_roll_dice">Tirar el dado</string>
+    <string name="btn_return_to_menu">Regresar al menú</string>
+    <string name="btn_return_from_scores">Regreso</string>
+    <string name="btn_remove_player">Eliminar jugador</string>
+    <string name="btn_high_scores">Puntuaciones altas</string>
+    <string name="btn_clear_scores">Puntuaciones claras</string>
+    <string name="btn_add_player">Agregar jugador</string>
+    <string name="tst_scores_cleared">¡Puntuaciones aclaradas!</string>
+    <string name="tst_must_have_2_players">¡Debe tener al menos 2 jugadores!</string>
+    <string name="tst_max_player_reached">¡Se alcanzó el máximo número de jugadores!</string>
+    <string name="tst_highest_roll_part_2">Por jugador :</string>
+    <string name="tst_highest_roll_part_1">Mayor puntaje de puntaje :</string>
+</resources>
