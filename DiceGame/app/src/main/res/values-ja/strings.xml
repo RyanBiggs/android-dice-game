@@ -19,4 +19,7 @@
     <string name="tst_max_player_reached">最大のプレーヤー数に達しました！</string>
     <string name="tst_highest_roll_part_2">プレイヤー別 ：</string>
     <string name="tst_highest_roll_part_1">最高スコアリング ：</string>
+    <string name="txt_player">プレーヤー</string>
+    <string name="txt_rolls">ロールズ ：</string>
+    <string name="txt_wins_with">勝つ ：</string>
 </resources>

@@ -19,4 +19,7 @@
     <string name="tst_max_player_reached">¡Se alcanzó el máximo número de jugadores!</string>
     <string name="tst_highest_roll_part_2">Por jugador :</string>
     <string name="tst_highest_roll_part_1">Mayor puntaje de puntaje :</string>
+    <string name="txt_player">Jugador</string>
+    <string name="txt_rolls">rollos :</string>
+    <string name="txt_wins_with">gana con :</string>
 </resources>

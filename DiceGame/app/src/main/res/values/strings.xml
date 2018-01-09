@@ -7,15 +7,19 @@
     <string name="btn_remove_player">Remove Player</string>
     <string name="btn_clear_scores">Clear Scores</string>
     <string name="btn_roll_dice">Roll Dice</string>
+    <string name="btn_add_player">Add Player</string>
     <string name="desc_dice_1">Dice 1</string>
     <string name="desc_dice_2">Dice 2</string>
-    <string name="txt_text_display">Click on Roll Dice!</string>
     <string name="lbl_player">Player</string>
     <string name="lbl_score">Score</string>
-    <string name="btn_add_player">Add Player</string>
     <string name="tst_max_player_reached">Maximum player count reached!</string>
     <string name="tst_must_have_2_players">Must have at least 2 players!</string>
     <string name="tst_highest_roll_part_1">Highest Scoring Roll :</string>
     <string name="tst_highest_roll_part_2">By Player :</string>
     <string name="tst_scores_cleared">Scores Cleared!</string>
+    <string name="txt_text_display">Click on Roll Dice!</string>
+    <string name="txt_player">Player</string>
+    <string name="txt_rolls">rolls :</string>
+    <string name="txt_wins_with">wins with :</string>
+    <string name="txt_exclamation_mark" translatable="false">!</string>
 </resources>

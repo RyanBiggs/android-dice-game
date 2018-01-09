@@ -19,4 +19,7 @@
     <string name="tst_max_player_reached">Maximale Spieleranzahl erreicht!</string>
     <string name="tst_must_have_2_players">Muss mindestens 2 Spieler haben!</string>
     <string name="tst_scores_cleared">Punkte gelöscht!</string>
+    <string name="txt_player">Spieler</string>
+    <string name="txt_rolls">Rollen :</string>
+    <string name="txt_wins_with">gewinnt mit :</string>
 </resources>

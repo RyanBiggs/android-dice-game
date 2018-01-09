@@ -245,7 +245,10 @@ public class GameActivity extends AppCompatActivity
 
         textAnim("rollText");           // Custom animation method to handle multiple text view animations
 
-        textDisplay.setText("Player " + player + " rolls : " + (dice1 + dice2));
+        textDisplay.setText(getString(R.string.txt_player)      // Sets the text display to show which player rolled, and with what score
+                + " " + player
+                + " " + getString(R.string.txt_rolls)
+                + " " + (dice1 + dice2));
 
         rollDice.setEnabled(false);         // Disables the roll dice button throughout the rolling process, so
                                             // the user does not press it repeatedly.
@@ -391,7 +394,11 @@ public class GameActivity extends AppCompatActivity
         {
             textAnim("winText");                                                                    // Play text animation for winning a game
 
-            textDisplay.setText("Player " + player + " wins with : " + (dice1 + dice2) + "!");      // Sets the text display to show which player won, and with what score
+            textDisplay.setText(getString(R.string.txt_player)                                      // Sets the text display to show which player won, and with what score
+                    + " " + player
+                    + " " + getString(R.string.txt_wins_with)
+                    + " " + (dice1 + dice2)
+                    + getString(R.string.txt_exclamation_mark));
 
 
             if ((dice1 + dice2) > currentRoll)                                                      // If the current roll is greater than the highest scoring roll...
